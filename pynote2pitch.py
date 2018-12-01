@@ -9,6 +9,15 @@ def __load_pynotes(note_path):
         pynotes = json.load(note)
     return pynotes["cells"]
 
+def generate_py_code(note_path,py_name):
+    note_cells = __load_pynotes(note_path)
+    with open(py_name,'w') as py_file:
+        py_codes = [code_line["source"] for code_line in note_cells \
+                 if code_line['cell_type']=='code']
+        codes =[]
+        for lines in py_codes:
+            codes.extend(lines)        
+        py_file.write("\n".join(codes))
 
 SLIDE_SEPERATOR = "---"
 
